@@ -1,13 +1,34 @@
 const cardObjectDefinitions = [
-  { id: 1, imagePath: "/images/card-KingOfHearts.png" },
+  { id: 1, imagePath: "/images/card-KingHearts.png" },
   { id: 2, imagePath: "/images/card-JackClubs.png" },
   { id: 3, imagePath: "/images/card-QueenDiamonds.png" },
-  { id: 4, imagePath: "/images/card-AcesSpades.png" },
+  { id: 4, imagePath: "/images/card-AceSpades.png" },
 ];
 
-const cardBackImgPath = "/images/card-back-blue.png";
+const cardBackImgPath = "/images/card-back-Blue.png";
 
 const cardContainerElem = document.querySelector(".card-container");
+
+/*
+<div class="card">
+  <div class="card-inner">
+    <div class="card-front">
+      <img src="/images/card-JackClubs.png" alt="" class="card-img" />
+    </div>
+    <div class="card-back">
+      <img src="/images/card-back-Blue.png" alt="" class="card-img" />
+    </div>
+  </div>
+</div>
+*/
+
+createCards();
+
+function createCards() {
+  cardObjectDefinitions.forEach((cardItem) => {
+    createCard(cardItem);
+  });
+}
 
 function createCard(cardItem) {
   // create div elements that make up a card
@@ -59,6 +80,9 @@ function createCard(cardItem) {
 
   //add inner card element as child element to card element
   addChildElement(cardElem, cardInnerElem);
+
+  // add card element as child element to appropriate grid cell
+  addCardToGridCell(cardElem);
 }
 
 function createElement(elemType) {
@@ -69,7 +93,7 @@ function addClassToElement(elem, className) {
   elem.classList.add(className);
 }
 
-function addIdToElement(element, id) {
+function addIdToElement(elem, id) {
   elem.id = id;
 }
 
@@ -79,4 +103,25 @@ function addSrcToImageElem(imgElem, src) {
 
 function addChildElement(parentElem, childElem) {
   parentElem.appendChild(childElem);
+}
+
+function addCardToGridCell(card) {
+  const cardPositionClassName = mapCardIdToGridCell(card);
+
+  const cardPosElem = document.querySelector(cardPositionClassName);
+
+  addChildElement(cardPosElem, card);
+}
+
+function mapCardIdToGridCell(card) {
+  switch (card.id) {
+    case "1":
+      return ".card-pos-a";
+    case "2":
+      return ".card-pos-b";
+    case "3":
+      return ".card-pos-c";
+    case "4":
+      return ".card-pos-d";
+  }
 }
