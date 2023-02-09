@@ -9,6 +9,10 @@ const cardBackImgPath = "/images/card-back-Blue.png";
 
 const cardContainerElem = document.querySelector(".card-container");
 
+let cards = [];
+
+const playGameButtonElem = document.getElementById("playGame");
+
 /*
 <div class="card">
   <div class="card-inner">
@@ -22,7 +26,30 @@ const cardContainerElem = document.querySelector(".card-container");
 </div>
 */
 
-createCards();
+loadGame();
+
+function loadGame() {
+  createCards();
+
+  cards = document.querySelectorAll(".card");
+
+  playGameButtonElem.addEventListener("click", () => startGame());
+}
+
+function startGame() {
+  initializeNewGame();
+  startRound();
+}
+
+function initializeNewGame() {
+}
+
+function startRound() {
+  initializeNewRound();
+}
+
+function initializeNewRound() {
+}
 
 function createCards() {
   cardObjectDefinitions.forEach((cardItem) => {
