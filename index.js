@@ -54,7 +54,8 @@ function initializeNewGame() {
 function startRound() {
   initializeNewRound();
   collectCards();
-  flipCards(true);
+  // flipCards(true);
+  shuffleCards();
 }
 
 function initializeNewRound() {
@@ -101,8 +102,9 @@ function shuffleCards() {
   function shuffle() {
     randomizeCardPositions();
 
-    if (shuffleCount == 500) {
+    if (shuffleCount == 10) {
       clearInterval(id);
+      dealCards();
     } else {
       shuffleCount++;
     }
@@ -117,6 +119,54 @@ function randomizeCardPositions() {
 
   cardPositions[random1 - 1] = cardPositions[random2 - 1];
   cardPositions[random2 - 1] = temp;
+}
+
+function dealCards() {
+  addCardsToAppropriateCell();
+  const areasTemplate = returnGridAreasMappedToCardPos();
+
+  console.log(areasTemplate);
+  transformGridArea(areasTemplate);
+}
+
+function returnGridAreasMappedToCardPos() {
+  let firstPart = "";
+  let secondPart = "";
+  let areas = "";
+
+  cards.forEach((card, index) => {
+    switch (cardPositions[index]) {
+      case "1":
+        areas = areas + "a ";
+        break;
+      case "2":
+        areas = areas + "b ";
+        break;
+      case "3":
+        areas = areas + "c ";
+        break;
+      case "4":
+        areas = areas + "d ";
+        break;
+    }
+
+    switch (index) {
+      case 1:
+        firstPart = areas.substring(0, areas.length - 1);
+        areas = "";
+        break;
+      case 3:
+        secondPart = areas.substring(0, areas.length - 1);
+        break;
+    }
+  });
+  return `"${firstPart}" "${secondPart}"`;
+}
+
+function addCardsToAppropriateCell() {
+  cards.forEach((card) => {
+    addCardToGridCell(card);
+  });
 }
 
 function createCards() {
@@ -182,7 +232,7 @@ function createCard(cardItem) {
   initializeCardPositions(cardElem);
 }
 
-function initializeCardPositions() {
+function initializeCardPositions(card) {
   cardPositions.push(card.id);
 }
 
