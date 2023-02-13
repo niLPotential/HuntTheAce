@@ -127,7 +127,7 @@ function updateScore() {
     scoreElem,
     "block",
     primaryColor,
-    `<span class="badge">${score}</span>`,
+    `Score <span class="badge">${score}</span>>`,
   );
 }
 
@@ -179,6 +179,7 @@ function loadGame() {
   playGameButtonElem.addEventListener("click", () => startGame());
 
   updateStatusElement(scoreContainerElem, "none");
+  updateStatusElement(roundContainerElem, "none");
 }
 
 function startGame() {
